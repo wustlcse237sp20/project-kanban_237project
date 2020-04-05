@@ -15,9 +15,7 @@ public class Board {
 	static int keyCount3 = 0;
 	static int keyCount4 = 0;
 	static int keyCount5 = 0;
-	
-	static boolean boo = true;
-	
+		
 	public static void main(String[] args) {
 		// Each SortedMap represents a column on the board
 		SortedMap<Integer, String> Backlog = new TreeMap<Integer, String>();
@@ -26,12 +24,14 @@ public class Board {
 		SortedMap<Integer, String> Complete = new TreeMap<Integer, String>();
 		SortedMap<Integer, String> Blocked = new TreeMap<Integer, String>();
 		
+		//Create the set for each column, to store each task
 		Set BacklogSet = Backlog.entrySet();
 		Set InProgressSet = InProgress.entrySet();
 		Set VerifySet = Verify.entrySet();
 		Set CompleteSet = Complete.entrySet();
 		Set BlockedSet = Blocked.entrySet();
 		
+		//iterator for every set to find each task
 		Iterator a = BacklogSet.iterator();
 		Iterator b = InProgressSet.iterator();
 		Iterator c = VerifySet.iterator();
@@ -40,9 +40,7 @@ public class Board {
 		
 		Scanner task = new Scanner(System.in);
 		
-		
-		
-		while(boo == true) {
+		while(true) {
 			
 		System.out.println("Enter 1 if you would like to add a task");
 		System.out.println("Enter 2 if you would like to delete a task");
@@ -62,6 +60,7 @@ public class Board {
 			
 			int branch = branchInput.nextInt();
 			
+			//allows user to add tasks to the backlog
 			if(branch == 1) {
 				System.out.println("What task would you like to add?");
 				Scanner add = new Scanner(System.in);
@@ -77,6 +76,7 @@ public class Board {
 				}
 			}
 			
+			//allows user to add tasks to the in progress
 			else if(branch == 2) {
 				System.out.println("What task would you like to add?");
 				Scanner add = new Scanner(System.in);
@@ -91,6 +91,7 @@ public class Board {
 				}
 			}
 			
+			//allows user to add tasks to verify
 			else if(branch == 3) {
 				System.out.println("What task would you like to add?");
 				Scanner add = new Scanner(System.in);
@@ -105,6 +106,7 @@ public class Board {
 				}
 			}
 			
+			//allows user to add tasks to complete
 			else if(branch == 4) {
 				System.out.println("What task would you like to add?");
 				Scanner add = new Scanner(System.in);
@@ -119,6 +121,7 @@ public class Board {
 				}
 			}
 			
+			//allows user to add tasks to blocked
 			else if(branch == 5) {
 				System.out.println("What task would you like to add?");
 				Scanner add = new Scanner(System.in);
@@ -133,6 +136,7 @@ public class Board {
 				}
 			}
 			
+			//allows user to return to the main menu
 			else if(branch == 6) {
 				//return to option of add/delete
 				continue;
@@ -148,8 +152,7 @@ public class Board {
 			System.out.println("4 = Complete");
 			System.out.println("5 = Blocked");
 			System.out.println("6 = Go Back");
-			
-			
+						
 			Scanner branchInput = new Scanner(System.in);
 			
 			int branch = branchInput.nextInt();
@@ -236,17 +239,11 @@ public class Board {
 			
 		}			
 	}	
-		
-		// "Testing" adding items to the board - make into a formal JUnit test
-		// Eventually, we want to prompt the user to add tasks as part of a separate method
-		Backlog.put(5,  "Cry over 237");
-		Backlog.put(3, "Take exam");
-		Backlog.put(4, "Do homework");
 
 		
-	}
+}
 		
-		 // Printing Backlog column
+		 // Display Backlog column
 		static void displayBackLog(Set Backlog, Iterator a) {		
 		while (a.hasNext()) {
 			Map.Entry<Integer, String> me = (Map.Entry<Integer, String>)a.next();
@@ -256,7 +253,7 @@ public class Board {
 			
 		
 	}
-		//Printing In Progress Column
+		//Display In Progress Column
 		static void displayInProgress(Set InProgressSet, Iterator b) {		
 			while (b.hasNext()) {
 				Map.Entry<Integer, String> me = (Map.Entry<Integer, String>)b.next();
