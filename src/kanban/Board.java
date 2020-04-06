@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+
 public class Board {	
 
 	static int backlogCount = 0;
@@ -51,35 +52,35 @@ public class Board {
 
 				//allows user to add tasks to the backlog
 				if(branch == 1) {
-					addTask(Backlog);
+					addTask(Backlog, backlogCount);
 
 					displayTaskMap(Backlog, "Backlog");
 				}
 
 				//allows user to add tasks to the in progress
 				else if(branch == 2) {
-					addTask(InProgress);
+					addTask(InProgress,inprogressCount);
 
 					displayTaskMap(InProgress, "InProgress");
 				}
 
 				//allows user to add tasks to verify
 				else if(branch == 3) {
-					addTask(Verify);
+					addTask(Verify, verifyCount);
 
 					displayTaskMap(Verify, "Verify");
 				}
 
 				//allows user to add tasks to complete
 				else if(branch == 4) {
-					addTask(Complete);
+					addTask(Complete, completeCount);
 
 					displayTaskMap(Complete, "Complete");
 				}
 
 				//allows user to add tasks to blocked
 				else if(branch == 5) {
-					addTask(Blocked);
+					addTask(Blocked,blockedCount);
 
 					displayTaskMap(Blocked, "Blocked");
 				}
@@ -148,6 +149,11 @@ public class Board {
 	}
 
 	
+	
+	/**
+	 * @param mapToDeleteTask the map that the user is deleting a task from
+	 * @return void
+	 */
 	private static void deleteTask(SortedMap<Integer, String> mapToDeleteTask) {
 		System.out.println("What task number would you like to delete?");
 		Scanner delete = new Scanner(System.in);
@@ -155,17 +161,27 @@ public class Board {
 		mapToDeleteTask.remove(deleteTask);
 	}
 
-	private static void addTask(SortedMap<Integer, String> mapToAddTask) {
+	/**
+	 * @param mapToAddTask the map that the user is adding a task to
+	 * @param taskCounter the index of in the map that the task is being added to
+	 * @return void
+	 */
+	private static void addTask(SortedMap<Integer, String> mapToAddTask, int taskCounter) {
 		System.out.println("What task would you like to add?");
 		Scanner add = new Scanner(System.in);
 		String addTask = add.nextLine();
-		backlogCount++;
-		mapToAddTask.put(backlogCount, addTask);
+		taskCounter++;
+		mapToAddTask.put(taskCounter, addTask);
 	}
 
-	private static void displayTaskMap(SortedMap<Integer, String> a, String kanbanCategoryName) {
+	/**
+	 * @param mapToDisplay the map that is being printed 
+	 * @param kanbanCategoryName the category of the Kanban board that the map represents
+	 * @return void
+	 */
+	private static void displayTaskMap(SortedMap<Integer, String> mapToDisplay, String kanbanCategoryName) {
 		System.out.println("Kanban Board Category: " + kanbanCategoryName);
-		for (Map.Entry<Integer, String> entry : a.entrySet()) {
+		for (Map.Entry<Integer, String> entry : mapToDisplay.entrySet()) {
 			System.out.println("Key: " + entry.getKey() + " Value: " + entry.getValue());
 		}
 		System.out.println();
