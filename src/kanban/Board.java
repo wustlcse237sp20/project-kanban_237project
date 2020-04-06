@@ -25,12 +25,9 @@ public class Board {
 		SortedMap<Integer, String> Complete = new TreeMap<Integer, String>();
 		SortedMap<Integer, String> Blocked = new TreeMap<Integer, String>();
 
-
-		//close leak
-		//
 		Scanner task = new Scanner(System.in);
 
-		while(true) {
+		while(true) {	
 
 			System.out.println("Enter 1 if you would like to add a task");
 			System.out.println("Enter 2 if you would like to delete a task");
@@ -54,43 +51,39 @@ public class Board {
 				//allows user to add tasks to the backlog
 				if(branch == 1) {
 					addTask(Backlog, backlogCount);
-
 					displayTaskMap(Backlog, "Backlog");
 				}
 
 				//allows user to add tasks to the in progress
 				else if(branch == 2) {
-					addTask(InProgress,inprogressCount);
-
+					addTask(InProgress, inprogressCount);
 					displayTaskMap(InProgress, "InProgress");
 				}
 
 				//allows user to add tasks to verify
 				else if(branch == 3) {
 					addTask(Verify, verifyCount);
-
 					displayTaskMap(Verify, "Verify");
 				}
 
 				//allows user to add tasks to complete
 				else if(branch == 4) {
-					addTask(Complete, completeCount);
-
+					addTask(Complete, completeCount);					
 					displayTaskMap(Complete, "Complete");
 				}
 
 				//allows user to add tasks to blocked
 				else if(branch == 5) {
-					addTask(Blocked,blockedCount);
-
+					addTask(Blocked, blockedCount);
 					displayTaskMap(Blocked, "Blocked");
 				}
 
 				//allows user to return to the main menu
 				else if(branch == 6) {
 					continue;
-				}		
+				}	
 			}	
+			
 			else if(userInput == 2) {
 				System.out.println("Where would you like to delete the task?");
 				System.out.println("1 = Backlog");
@@ -132,7 +125,9 @@ public class Board {
 				else if(branch == 6) {
 					continue;
 				}
+				
 			}
+						
 			else if(userInput == 3) {
 
 				displayTaskMap(Backlog, "Backlog");
@@ -145,12 +140,12 @@ public class Board {
 			else {
 				System.out.println("Please enter a valid number");
 				continue;
-			}			
+			}	
+			
 		}	
+		
 	}
 
-	
-	
 	/**
 	 * @param mapToDeleteTask the map that the user is deleting a task from
 	 * @return void
@@ -160,6 +155,7 @@ public class Board {
 		Scanner delete = new Scanner(System.in);
 		int deleteTask = delete.nextInt();
 		mapToDeleteTask.remove(deleteTask);
+		
 	}
 
 	/**
@@ -173,6 +169,7 @@ public class Board {
 		String addTask = add.nextLine();
 		taskCounter++;
 		mapToAddTask.put(taskCounter, addTask);
+
 	}
 
 	/**
