@@ -9,7 +9,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 
-public class Board {	
+public class Board {
 
 	static int backlogCount = 0;
 	static int inprogressCount = 0;
@@ -27,6 +27,7 @@ public class Board {
 
 
 		//close leak
+		//
 		Scanner task = new Scanner(System.in);
 
 		while(true) {
