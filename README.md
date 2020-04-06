@@ -24,6 +24,8 @@ The display method could be improved upon to show the tasks and the columns in a
 What commands are needed to compile and run your code from the command line (or better yet, provide a script that people can use to run your program!)
 
 Currently our code can be run directly from the command line, and we plan to make our program more user friendly in a later iteration. 
-javac Board.java //compile
-java Board
+1. cd into the src folder
+2. java kanban.Board
+3. ctrl+C to quit
+
 The program should prompt the user for adding and deleting tasks.
