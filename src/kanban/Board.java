@@ -148,11 +148,11 @@ public class Board {
 				int taskNumber = whichTask.nextInt();
 				
 				System.out.println("Which task would you like to move?");
-				System.out.println("Enter a valid key: ");
+				System.out.println("Enter task name: ");
 
 				//close leak
 				Scanner branchInput = new Scanner(System.in);
-				int branchTaskIsMovingFrom = branchInput.nextInt();
+				String branchTaskIsMovingFrom = branchInput.nextLine();
 				
 				System.out.println("Where would you like to move this task to?");
 				System.out.println("1 = Backlog");
@@ -169,7 +169,7 @@ public class Board {
 
 				//allows user to add tasks to the backlog
 				
-				if(branchTaskIsMovingFrom == 1) {
+				if(branchTaskIsMovingFrom.equals("1")) {
 					
 					
 						if(branchTaskIsMovingToo == 2) {
@@ -189,7 +189,7 @@ public class Board {
 				}
 
 		
-				else if(branchTaskIsMovingFrom == 2) {
+				else if(branchTaskIsMovingFrom.equals("2")) {
 					
 					
 						if(branchTaskIsMovingToo == 1) {
@@ -209,7 +209,7 @@ public class Board {
 				}
 
 				//allows user to add tasks to verify
-				else if(branchTaskIsMovingFrom == 3) {
+				else if(branchTaskIsMovingFrom.equals("3")) {
 					
 						if(branchTaskIsMovingToo == 1) {
 							moveTask(Verify, Backlog, taskNumber);
@@ -228,11 +228,11 @@ public class Board {
 				}
 
 				//allows user to add tasks to complete
-				else if(branchTaskIsMovingFrom == 4) {
+				else if(branchTaskIsMovingFrom.equals("4")) {
 					
 					
 					System.out.println("Which task would you like to move?");
-					System.out.println("Enter a valid key: ");
+					System.out.println("Enter task name: ");
 					
 						if(branchTaskIsMovingToo == 1) {
 							moveTask(Complete, Backlog, taskNumber);
@@ -251,11 +251,11 @@ public class Board {
 				}
 
 				//allows user to add tasks to blocked
-				else if(branchTaskIsMovingFrom == 5) {
+				else if(branchTaskIsMovingFrom.equals("5")) {
 					
 					
 					System.out.println("Which task would you like to move?");
-					System.out.println("Enter a valid key: ");
+					System.out.println("Enter task name: ");
 					
 						if(branchTaskIsMovingToo == 1) {
 							moveTask(Blocked, Backlog, taskNumber);
@@ -274,7 +274,7 @@ public class Board {
 				}
 
 				//allows user to return to the main menu
-				else if(branchTaskIsMovingFrom == 6) {
+				else if(branchTaskIsMovingFrom.equals("6")) {
 					continue;
 				}	
 			}	
