@@ -32,6 +32,7 @@ public class Board {
 			System.out.println("Enter 1 if you would like to add a task");
 			System.out.println("Enter 2 if you would like to delete a task");
 			System.out.println("Enter 3 if you would like to display the Kanban Board");
+			System.out.println("Enter 4 if you would like to move a task");
 
 			int userInput = task.nextInt();
 
@@ -136,6 +137,153 @@ public class Board {
 				displayTaskMap(Complete, "Complete");
 				displayTaskMap(Blocked, "Blocked");
 			}
+			
+			//moveTask
+			else if(userInput == 4) {
+				System.out.println("Where would you like to move this task from?");
+				System.out.println("1 = Backlog");
+				System.out.println("2 = InProgress");
+				System.out.println("3 = Verify");
+				System.out.println("4 = Complete");
+				System.out.println("5 = Blocked");
+				System.out.println("6 = Go Back");
+				
+				//TaskNumber
+				Scanner whichTask = new Scanner(System.in);
+				int taskNumber = whichTask.nextInt();
+				
+				System.out.println("Which task would you like to move?");
+				System.out.println("Enter a valid key: ");
+
+				//close leak
+				Scanner branchInput = new Scanner(System.in);
+				int branchTaskIsMovingFrom = branchInput.nextInt();
+				
+				System.out.println("Where would you like to move this task to?");
+				System.out.println("1 = Backlog");
+				System.out.println("2 = InProgress");
+				System.out.println("3 = Verify");
+				System.out.println("4 = Complete");
+				System.out.println("5 = Blocked");
+				System.out.println("6 = Go Back");
+				
+				
+				
+				//Scanner branchOutput = new Scanner(System.in);
+				int branchTaskIsMovingToo = branchInput.nextInt();
+
+				//allows user to add tasks to the backlog
+				
+				if(branchTaskIsMovingFrom == 1) {
+					
+					
+						if(branchTaskIsMovingToo == 2) {
+							moveTask(Backlog, InProgress, taskNumber);
+						}
+						else if(branchTaskIsMovingToo == 3) {
+							moveTask(Backlog, Verify, taskNumber);
+						}
+						else if(branchTaskIsMovingToo == 4) {
+							moveTask(Backlog, Complete, taskNumber);
+						}
+						else if(branchTaskIsMovingToo == 5) {
+							moveTask(Backlog, Blocked, taskNumber);
+						}	       
+//					moveTask(Backlog, backlogCount);
+//					displayTaskMap(Backlog, "Backlog");
+				}
+
+				//dos
+				else if(branchTaskIsMovingFrom == 2) {
+					
+					
+						if(branchTaskIsMovingToo == 1) {
+							moveTask(InProgress, Backlog, taskNumber);
+						}
+						else if(branchTaskIsMovingToo == 3) {
+							moveTask(InProgress, Verify, taskNumber);
+						}
+						else if(branchTaskIsMovingToo == 4) {
+							moveTask(InProgress, Complete, taskNumber);
+						}
+						else if(branchTaskIsMovingToo == 5) {
+							moveTask(InProgress, Blocked, taskNumber);
+						}	       
+//					moveTask(Backlog, backlogCount);
+//					displayTaskMap(Backlog, "Backlog");
+				}
+
+				//allows user to add tasks to verify
+				else if(branchTaskIsMovingFrom == 3) {
+					
+					
+						if(branchTaskIsMovingToo == 1) {
+							moveTask(Verify, Backlog, taskNumber);
+						}
+						else if(branchTaskIsMovingToo == 2) {
+							moveTask(Verify, InProgress, taskNumber);
+						}
+						else if(branchTaskIsMovingToo == 4) {
+							moveTask(Verify, Complete, taskNumber);
+						}
+						else if(branchTaskIsMovingToo == 5) {
+							moveTask(Verify, Blocked, taskNumber);
+						}	       
+//					moveTask(Backlog, backlogCount);
+//					displayTaskMap(Backlog, "Backlog");
+				}
+
+				//allows user to add tasks to complete
+				else if(branchTaskIsMovingFrom == 4) {
+					
+					
+					System.out.println("Which task would you like to move?");
+					System.out.println("Enter a valid key: ");
+					
+						if(branchTaskIsMovingToo == 1) {
+							moveTask(Complete, Backlog, taskNumber);
+						}
+						else if(branchTaskIsMovingToo == 2) {
+							moveTask(Complete, InProgress, taskNumber);
+						}
+						else if(branchTaskIsMovingToo == 3) {
+							moveTask(Complete, Verify, taskNumber);
+						}
+						else if(branchTaskIsMovingToo == 5) {
+							moveTask(Complete, Blocked, taskNumber);
+						}	       
+//					moveTask(Backlog, backlogCount);
+//					displayTaskMap(Backlog, "Backlog");
+				}
+
+				//allows user to add tasks to blocked
+				else if(branchTaskIsMovingFrom == 5) {
+					
+					
+					System.out.println("Which task would you like to move?");
+					System.out.println("Enter a valid key: ");
+					
+						if(branchTaskIsMovingToo == 1) {
+							moveTask(Blocked, Backlog, taskNumber);
+						}
+						else if(branchTaskIsMovingToo == 2) {
+							moveTask(Blocked, InProgress, taskNumber);
+						}
+						else if(branchTaskIsMovingToo == 3) {
+							moveTask(Blocked, Verify, taskNumber);
+						}
+						else if(branchTaskIsMovingToo == 4) {
+							moveTask(Blocked, Complete, taskNumber);
+						}	       
+//					moveTask(Backlog, backlogCount);
+//					displayTaskMap(Backlog, "Backlog");
+				}
+
+				//allows user to return to the main menu
+				else if(branchTaskIsMovingFrom == 6) {
+					continue;
+				}	
+			}	
 
 			else {
 				System.out.println("Please enter a valid number");
@@ -184,4 +332,25 @@ public class Board {
 		}
 		System.out.println();
 	}
+	
+	private static void moveDelete(SortedMap<Integer, String> mapToDeleteTask, int taskNumber) {
+	
+		mapToDeleteTask.remove(taskNumber);
+		 
+	}
+	private static void moveAdd(SortedMap<Integer, String> mapToAddTask, int taskCounter, String save) {
+		
+		mapToAddTask.put(taskCounter, save);
+
+	}
+	
+	private static void moveTask(SortedMap<Integer, String> mapMovingFrom, SortedMap<Integer, String> mapMovingTo, int taskNumber) {
+		
+		String save = mapMovingFrom.get(taskNumber);
+		
+		moveDelete(mapMovingFrom, taskNumber);
+		moveAdd(mapMovingTo, mapMovingTo.size()+1, save);
+		
+	}
+	
 }
