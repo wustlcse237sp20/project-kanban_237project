@@ -339,21 +339,39 @@ public class Board {
 		System.out.println();
 	}
 	
-	//need javadocs
+	
+	/**
+	 * @param mapToDeleteTask is the map that contains the task to be deleted
+	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
+	 */
 	private static void moveDelete(SortedMap<Long, String> mapToDeleteTask, long taskTimeStamp) {
 		mapToDeleteTask.remove(taskTimeStamp);
 	}
 	
+	/**
+	 * @param mapToAddTask is the map that contains the task to be added
+	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
+	 * @param save is the string value that keeps track of which task you want to move
+	 */
 	private static void moveAdd(SortedMap<Long, String> mapToAddTask, long taskTimeStamp, String save) {
 		mapToAddTask.put(taskTimeStamp, save);
 	}
 	
+	/**
+	 * @param mapMovingFrom is the map that contains the task to be moved
+	 * @param mapMovingTo is the map that is where the task is being moved to
+	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
+	 */
 	private static void moveTask(SortedMap<Long, String> mapMovingFrom, SortedMap<Long, String> mapMovingTo, long taskTimeStamp) {
 		String save = mapMovingFrom.get(taskTimeStamp);
 		moveDelete(mapMovingFrom, taskTimeStamp);
 		moveAdd(mapMovingTo, mapMovingTo.size()+1, save);
 	}
 	
+	/**
+	 * @param currentTime is the time that is associated with when a task is created by the user
+	 * @return we are returning the time in a formatted string value
+	 */
 	public static String generateTimestamp(long currentTime) {
 		Timestamp timestamp = new Timestamp(currentTime);
 		return timestamp.toString();
