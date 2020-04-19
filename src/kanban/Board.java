@@ -1,5 +1,6 @@
 package kanban;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Iterator;
@@ -8,23 +9,16 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-
 public class Board {
-
-	static int backlogCount = 0;
-	static int inprogressCount = 0;
-	static int verifyCount = 0;
-	static int completeCount = 0;
-	static int blockedCount = 0;
-
+	
 	public static void main(String[] args) {
 		// Each SortedMap represents a column on the board
-		SortedMap<Integer, String> Backlog = new TreeMap<Integer, String>();
-		SortedMap<Integer, String> InProgress = new TreeMap<Integer, String>();
-		SortedMap<Integer, String> Verify = new TreeMap<Integer, String>();
-		SortedMap<Integer, String> Complete = new TreeMap<Integer, String>();
-		SortedMap<Integer, String> Blocked = new TreeMap<Integer, String>();
-
+		SortedMap<Long, String> Backlog = new TreeMap<Long, String>();
+		SortedMap<Long, String> InProgress = new TreeMap<Long, String>();
+		SortedMap<Long, String> Verify = new TreeMap<Long, String>();
+		SortedMap<Long, String> Complete = new TreeMap<Long, String>();
+		SortedMap<Long, String> Blocked = new TreeMap<Long, String>();
+		
 		Scanner task = new Scanner(System.in);
 
 		while(true) {	
@@ -33,10 +27,10 @@ public class Board {
 			System.out.println("Enter 2 if you would like to delete a task");
 			System.out.println("Enter 3 if you would like to display the Kanban Board");
 			System.out.println("Enter 4 if you would like to move a task");
+			
+			String userInput = task.nextLine();
 
-			int userInput = task.nextInt();
-
-			if(userInput == 1) {
+			if(userInput.equals("1")) {
 				System.out.println("Where would you like to add this task?");
 				System.out.println("1 = Backlog");
 				System.out.println("2 = InProgress");
@@ -51,31 +45,32 @@ public class Board {
 
 				//allows user to add tasks to the backlog
 				if(branch == 1) {
-					addTask(Backlog, backlogCount);
+					addTask(Backlog, System.currentTimeMillis());
 					displayTaskMap(Backlog, "Backlog");
+				
 				}
 
 				//allows user to add tasks to the in progress
 				else if(branch == 2) {
-					addTask(InProgress, inprogressCount);
+					addTask(InProgress, System.currentTimeMillis());
 					displayTaskMap(InProgress, "InProgress");
 				}
 
 				//allows user to add tasks to verify
 				else if(branch == 3) {
-					addTask(Verify, verifyCount);
+					addTask(Verify, System.currentTimeMillis());
 					displayTaskMap(Verify, "Verify");
 				}
 
 				//allows user to add tasks to complete
 				else if(branch == 4) {
-					addTask(Complete, completeCount);					
+					addTask(Complete, System.currentTimeMillis());					
 					displayTaskMap(Complete, "Complete");
 				}
 
 				//allows user to add tasks to blocked
 				else if(branch == 5) {
-					addTask(Blocked, blockedCount);
+					addTask(Blocked, System.currentTimeMillis());
 					displayTaskMap(Blocked, "Blocked");
 				}
 
@@ -85,7 +80,7 @@ public class Board {
 				}	
 			}	
 			
-			else if(userInput == 2) {
+			else if(userInput.equals("2")) {
 				System.out.println("Where would you like to delete the task?");
 				System.out.println("1 = Backlog");
 				System.out.println("2 = InProgress");
@@ -129,7 +124,7 @@ public class Board {
 				
 			}
 						
-			else if(userInput == 3) {
+			else if(userInput.equals("3")) {
 
 				displayTaskMap(Backlog, "Backlog");
 				displayTaskMap(InProgress, "InProgress");
@@ -139,7 +134,7 @@ public class Board {
 			}
 			
 			//moveTask
-			else if(userInput == 4) {
+			else if(userInput.equals("4")) {
 				System.out.println("Where would you like to move this task from?");
 				System.out.println("1 = Backlog");
 				System.out.println("2 = InProgress");
@@ -153,11 +148,11 @@ public class Board {
 				int taskNumber = whichTask.nextInt();
 				
 				System.out.println("Which task would you like to move?");
-				System.out.println("Enter a valid key: ");
+				System.out.println("Enter task name: ");
 
 				//close leak
 				Scanner branchInput = new Scanner(System.in);
-				int branchTaskIsMovingFrom = branchInput.nextInt();
+				String branchTaskIsMovingFrom = branchInput.nextLine();
 				
 				System.out.println("Where would you like to move this task to?");
 				System.out.println("1 = Backlog");
@@ -174,7 +169,7 @@ public class Board {
 
 				//allows user to add tasks to the backlog
 				
-				if(branchTaskIsMovingFrom == 1) {
+				if(branchTaskIsMovingFrom.equals("1")) {
 					
 					
 						if(branchTaskIsMovingToo == 2) {
@@ -190,11 +185,11 @@ public class Board {
 							moveTask(Backlog, Blocked, taskNumber);
 						}	       
 //					moveTask(Backlog, backlogCount);
-//					displayTaskMap(Backlog, "Backlog");
+//					displayTaskMap(Backlog, "Backlog"); delete with permission
 				}
 
-				//dos
-				else if(branchTaskIsMovingFrom == 2) {
+		
+				else if(branchTaskIsMovingFrom.equals("2")) {
 					
 					
 						if(branchTaskIsMovingToo == 1) {
@@ -214,8 +209,7 @@ public class Board {
 				}
 
 				//allows user to add tasks to verify
-				else if(branchTaskIsMovingFrom == 3) {
-					
+				else if(branchTaskIsMovingFrom.equals("3")) {
 					
 						if(branchTaskIsMovingToo == 1) {
 							moveTask(Verify, Backlog, taskNumber);
@@ -234,11 +228,11 @@ public class Board {
 				}
 
 				//allows user to add tasks to complete
-				else if(branchTaskIsMovingFrom == 4) {
+				else if(branchTaskIsMovingFrom.equals("4")) {
 					
 					
 					System.out.println("Which task would you like to move?");
-					System.out.println("Enter a valid key: ");
+					System.out.println("Enter task name: ");
 					
 						if(branchTaskIsMovingToo == 1) {
 							moveTask(Complete, Backlog, taskNumber);
@@ -257,11 +251,11 @@ public class Board {
 				}
 
 				//allows user to add tasks to blocked
-				else if(branchTaskIsMovingFrom == 5) {
+				else if(branchTaskIsMovingFrom.equals("5")) {
 					
 					
 					System.out.println("Which task would you like to move?");
-					System.out.println("Enter a valid key: ");
+					System.out.println("Enter task name: ");
 					
 						if(branchTaskIsMovingToo == 1) {
 							moveTask(Blocked, Backlog, taskNumber);
@@ -280,7 +274,7 @@ public class Board {
 				}
 
 				//allows user to return to the main menu
-				else if(branchTaskIsMovingFrom == 6) {
+				else if(branchTaskIsMovingFrom.equals("6")) {
 					continue;
 				}	
 			}	
@@ -292,18 +286,31 @@ public class Board {
 			
 		}	
 		
+		
+		
 	}
 
 	/**
 	 * @param mapToDeleteTask the map that the user is deleting a task from
 	 * @return void
 	 */
-	private static void deleteTask(SortedMap<Integer, String> mapToDeleteTask) {
-		System.out.println("What task number would you like to delete?");
+	private static void deleteTask(SortedMap<Long, String> mapToDeleteTask) {
+		System.out.println("What task would you like to delete? Type in full name:");
 		Scanner delete = new Scanner(System.in);
-		int deleteTask = delete.nextInt();
-		mapToDeleteTask.remove(deleteTask);
+		String deleteTask = delete.nextLine();
 		
+        Iterator<Map.Entry<Long, String>> iterator = mapToDeleteTask.entrySet().iterator(); 
+  
+        while (iterator.hasNext()) { 
+            Map.Entry<Long, String> 
+            entry = iterator.next(); 
+  
+            if (deleteTask.equals(entry.getValue())) {
+                iterator.remove(); 
+            } 
+        }
+        
+        System.out.println("Task \"" + deleteTask + "\" successfully deleted."+ "\n");
 	}
 
 	/**
@@ -311,12 +318,11 @@ public class Board {
 	 * @param taskCounter the index of in the map that the task is being added to
 	 * @return void
 	 */
-	private static void addTask(SortedMap<Integer, String> mapToAddTask, int taskCounter) {
+	private static void addTask(SortedMap<Long, String> mapToAddTask, long taskTimeStamp) {
 		System.out.println("What task would you like to add?");
 		Scanner add = new Scanner(System.in);
 		String addTask = add.nextLine();
-		taskCounter++;
-		mapToAddTask.put(taskCounter, addTask);
+		mapToAddTask.put(taskTimeStamp, addTask);
 
 	}
 
@@ -325,32 +331,50 @@ public class Board {
 	 * @param kanbanCategoryName the category of the Kanban board that the map represents
 	 * @return void
 	 */
-	private static void displayTaskMap(SortedMap<Integer, String> mapToDisplay, String kanbanCategoryName) {
+	private static void displayTaskMap(SortedMap<Long, String> mapToDisplay, String kanbanCategoryName) {
 		System.out.println("Kanban Board Category: " + kanbanCategoryName);
-		for (Map.Entry<Integer, String> entry : mapToDisplay.entrySet()) {
-			System.out.println("Key: " + entry.getKey() + " Value: " + entry.getValue());
+		for (Map.Entry<Long, String> entry : mapToDisplay.entrySet()) {
+			System.out.println("Key: " + generateTimestamp(entry.getKey()) + " Value: " + entry.getValue());
 		}
 		System.out.println();
 	}
 	
-	private static void moveDelete(SortedMap<Integer, String> mapToDeleteTask, int taskNumber) {
 	
-		mapToDeleteTask.remove(taskNumber);
-		 
-	}
-	private static void moveAdd(SortedMap<Integer, String> mapToAddTask, int taskCounter, String save) {
-		
-		mapToAddTask.put(taskCounter, save);
-
+	/**
+	 * @param mapToDeleteTask is the map that contains the task to be deleted
+	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
+	 */
+	private static void moveDelete(SortedMap<Long, String> mapToDeleteTask, long taskTimeStamp) {
+		mapToDeleteTask.remove(taskTimeStamp);
 	}
 	
-	private static void moveTask(SortedMap<Integer, String> mapMovingFrom, SortedMap<Integer, String> mapMovingTo, int taskNumber) {
-		
-		String save = mapMovingFrom.get(taskNumber);
-		
-		moveDelete(mapMovingFrom, taskNumber);
+	/**
+	 * @param mapToAddTask is the map that contains the task to be added
+	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
+	 * @param save is the string value that keeps track of which task you want to move
+	 */
+	private static void moveAdd(SortedMap<Long, String> mapToAddTask, long taskTimeStamp, String save) {
+		mapToAddTask.put(taskTimeStamp, save);
+	}
+	
+	/**
+	 * @param mapMovingFrom is the map that contains the task to be moved
+	 * @param mapMovingTo is the map that is where the task is being moved to
+	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
+	 */
+	private static void moveTask(SortedMap<Long, String> mapMovingFrom, SortedMap<Long, String> mapMovingTo, long taskTimeStamp) {
+		String save = mapMovingFrom.get(taskTimeStamp);
+		moveDelete(mapMovingFrom, taskTimeStamp);
 		moveAdd(mapMovingTo, mapMovingTo.size()+1, save);
-		
+	}
+	
+	/**
+	 * @param currentTime is the time that is associated with when a task is created by the user
+	 * @return we are returning the time in a formatted string value
+	 */
+	public static String generateTimestamp(long currentTime) {
+		Timestamp timestamp = new Timestamp(currentTime);
+		return timestamp.toString();
 	}
 	
 }
