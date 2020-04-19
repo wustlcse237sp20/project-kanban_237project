@@ -32,6 +32,7 @@ public class Board {
 			System.out.println("Enter 1 if you would like to add a task");
 			System.out.println("Enter 2 if you would like to delete a task");
 			System.out.println("Enter 3 if you would like to display the Kanban Board");
+			System.out.println("Enter 4 if you would like to move a task");
 
 			int userInput = task.nextInt();
 
@@ -135,6 +136,71 @@ public class Board {
 				displayTaskMap(Verify, "Verify");
 				displayTaskMap(Complete, "Complete");
 				displayTaskMap(Blocked, "Blocked");
+			}
+			
+			else if(userInput == 4) {
+				System.out.println("Where would you like to move this task from?");
+				System.out.println("1 = Backlog");
+				System.out.println("2 = InProgress");
+				System.out.println("3 = Verify");
+				System.out.println("4 = Complete");
+				System.out.println("5 = Blocked");
+				System.out.println("6 = Go Back");
+
+				//close leak
+				Scanner branchInput = new Scanner(System.in);
+				int branchTaskIsMovingFrom = branchInput.nextInt();
+				
+				System.out.println("Where would you like to move this task to?");
+				System.out.println("1 = Backlog");
+				System.out.println("2 = InProgress");
+				System.out.println("3 = Verify");
+				System.out.println("4 = Complete");
+				System.out.println("5 = Blocked");
+				System.out.println("6 = Go Back");
+				
+				//Scanner branchOutput = new Scanner(System.in);
+				int branchTaskIsMovingToo = branchInput.nextInt();
+
+				//allows user to add tasks to the backlog
+				
+				if(branchTaskIsMovingFrom == 1) {
+					for(int i=1; i<7; i++) {
+						if(branchTaskIsMovingToo == i)
+					       
+					moveTask(Backlog, backlogCount);
+					displayTaskMap(Backlog, "Backlog");
+				}
+
+				//allows user to add tasks to the in progress
+				else if(branch == 2) {
+					addTask(InProgress, inprogressCount);
+					displayTaskMap(InProgress, "InProgress");
+				}
+
+				//allows user to add tasks to verify
+				else if(branch == 3) {
+					addTask(Verify, verifyCount);
+					displayTaskMap(Verify, "Verify");
+				}
+
+				//allows user to add tasks to complete
+				else if(branch == 4) {
+					addTask(Complete, completeCount);					
+					displayTaskMap(Complete, "Complete");
+				}
+
+				//allows user to add tasks to blocked
+				else if(branch == 5) {
+					addTask(Blocked, blockedCount);
+					displayTaskMap(Blocked, "Blocked");
+				}
+
+				//allows user to return to the main menu
+				else if(branch == 6) {
+					continue;
+				}	
+			}
 			}
 
 			else {
