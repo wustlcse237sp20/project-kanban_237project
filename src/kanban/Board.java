@@ -286,9 +286,7 @@ public class Board {
 			}	
 			
 		}	
-		
-		
-		
+
 	}
 
 	/**
