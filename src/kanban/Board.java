@@ -397,5 +397,4 @@ public class Board {
 		Timestamp timestamp = new Timestamp(currentTime);
 		return timestamp.toString();
 	}
-	
 }
