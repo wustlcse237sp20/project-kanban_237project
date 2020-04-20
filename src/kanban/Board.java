@@ -135,6 +135,8 @@ public class Board {
 			
 			//moveTask
 			else if(userInput.equals("4")) {
+		
+				Scanner whichTask = new Scanner(System.in);
 				System.out.println("Where would you like to move this task from?");
 				System.out.println("1 = Backlog");
 				System.out.println("2 = InProgress");
@@ -144,15 +146,14 @@ public class Board {
 				System.out.println("6 = Go Back");
 				
 				//TaskNumber
-				Scanner whichTask = new Scanner(System.in);
-				int taskNumber = whichTask.nextInt();
+				String branchTaskIsMovingFrom = whichTask.nextLine();
 				
 				System.out.println("Which task would you like to move?");
 				System.out.println("Enter task name: ");
 
 				//close leak
-				Scanner branchInput = new Scanner(System.in);
-				String branchTaskIsMovingFrom = branchInput.nextLine();
+				//Scanner branchInput = new Scanner(System.in);
+				String taskName = whichTask.nextLine();
 				
 				System.out.println("Where would you like to move this task to?");
 				System.out.println("1 = Backlog");
@@ -165,7 +166,7 @@ public class Board {
 				
 				
 				//Scanner branchOutput = new Scanner(System.in);
-				int branchTaskIsMovingToo = branchInput.nextInt();
+				int branchTaskIsMovingToo = whichTask.nextInt();
 
 				//allows user to add tasks to the backlog
 				
@@ -173,16 +174,16 @@ public class Board {
 					
 					
 						if(branchTaskIsMovingToo == 2) {
-							moveTask(Backlog, InProgress, taskNumber);
+							moveTask(Backlog, InProgress, taskName);
 						}
 						else if(branchTaskIsMovingToo == 3) {
-							moveTask(Backlog, Verify, taskNumber);
+							moveTask(Backlog, Verify, taskName);
 						}
 						else if(branchTaskIsMovingToo == 4) {
-							moveTask(Backlog, Complete, taskNumber);
+							moveTask(Backlog, Complete, taskName);
 						}
 						else if(branchTaskIsMovingToo == 5) {
-							moveTask(Backlog, Blocked, taskNumber);
+							moveTask(Backlog, Blocked, taskName);
 						}	       
 //					moveTask(Backlog, backlogCount);
 //					displayTaskMap(Backlog, "Backlog"); delete with permission
@@ -193,16 +194,16 @@ public class Board {
 					
 					
 						if(branchTaskIsMovingToo == 1) {
-							moveTask(InProgress, Backlog, taskNumber);
+							moveTask(InProgress, Backlog, taskName);
 						}
 						else if(branchTaskIsMovingToo == 3) {
-							moveTask(InProgress, Verify, taskNumber);
+							moveTask(InProgress, Verify, taskName);
 						}
 						else if(branchTaskIsMovingToo == 4) {
-							moveTask(InProgress, Complete, taskNumber);
+							moveTask(InProgress, Complete, taskName);
 						}
 						else if(branchTaskIsMovingToo == 5) {
-							moveTask(InProgress, Blocked, taskNumber);
+							moveTask(InProgress, Blocked, taskName);
 						}	       
 //					moveTask(Backlog, backlogCount);
 //					displayTaskMap(Backlog, "Backlog");
@@ -212,16 +213,16 @@ public class Board {
 				else if(branchTaskIsMovingFrom.equals("3")) {
 					
 						if(branchTaskIsMovingToo == 1) {
-							moveTask(Verify, Backlog, taskNumber);
+							moveTask(Verify, Backlog, taskName);
 						}
 						else if(branchTaskIsMovingToo == 2) {
-							moveTask(Verify, InProgress, taskNumber);
+							moveTask(Verify, InProgress, taskName);
 						}
 						else if(branchTaskIsMovingToo == 4) {
-							moveTask(Verify, Complete, taskNumber);
+							moveTask(Verify, Complete, taskName);
 						}
 						else if(branchTaskIsMovingToo == 5) {
-							moveTask(Verify, Blocked, taskNumber);
+							moveTask(Verify, Blocked, taskName);
 						}	       
 //					moveTask(Backlog, backlogCount);
 //					displayTaskMap(Backlog, "Backlog");
@@ -235,16 +236,16 @@ public class Board {
 					System.out.println("Enter task name: ");
 					
 						if(branchTaskIsMovingToo == 1) {
-							moveTask(Complete, Backlog, taskNumber);
+							moveTask(Complete, Backlog, taskName);
 						}
 						else if(branchTaskIsMovingToo == 2) {
-							moveTask(Complete, InProgress, taskNumber);
+							moveTask(Complete, InProgress, taskName);
 						}
 						else if(branchTaskIsMovingToo == 3) {
-							moveTask(Complete, Verify, taskNumber);
+							moveTask(Complete, Verify, taskName);
 						}
 						else if(branchTaskIsMovingToo == 5) {
-							moveTask(Complete, Blocked, taskNumber);
+							moveTask(Complete, Blocked, taskName);
 						}	       
 //					moveTask(Backlog, backlogCount);
 //					displayTaskMap(Backlog, "Backlog");
@@ -258,16 +259,16 @@ public class Board {
 					System.out.println("Enter task name: ");
 					
 						if(branchTaskIsMovingToo == 1) {
-							moveTask(Blocked, Backlog, taskNumber);
+							moveTask(Blocked, Backlog, taskName);
 						}
 						else if(branchTaskIsMovingToo == 2) {
-							moveTask(Blocked, InProgress, taskNumber);
+							moveTask(Blocked, InProgress, taskName);
 						}
 						else if(branchTaskIsMovingToo == 3) {
-							moveTask(Blocked, Verify, taskNumber);
+							moveTask(Blocked, Verify, taskName);
 						}
 						else if(branchTaskIsMovingToo == 4) {
-							moveTask(Blocked, Complete, taskNumber);
+							moveTask(Blocked, Complete, taskName);
 						}	       
 //					moveTask(Backlog, backlogCount);
 //					displayTaskMap(Backlog, "Backlog");
@@ -285,9 +286,7 @@ public class Board {
 			}	
 			
 		}	
-		
-		
-		
+
 	}
 
 	/**
@@ -298,6 +297,7 @@ public class Board {
 		System.out.println("What task would you like to delete? Type in full name:");
 		Scanner delete = new Scanner(System.in);
 		String deleteTask = delete.nextLine();
+		boolean taskExistsOnMapDeletingFrom = false;
 		
         Iterator<Map.Entry<Long, String>> iterator = mapToDeleteTask.entrySet().iterator(); 
   
@@ -306,13 +306,18 @@ public class Board {
             entry = iterator.next(); 
   
             if (deleteTask.equals(entry.getValue())) {
+            	taskExistsOnMapDeletingFrom = true;
                 iterator.remove(); 
             } 
         }
-        
-        System.out.println("Task \"" + deleteTask + "\" successfully deleted."+ "\n");
-	}
+        if(taskExistsOnMapDeletingFrom == false) {
+        	System.out.println("Error: task \"" + deleteTask + "\" does not exist in column."+ "\n");
 
+        }
+        else {
+        	System.out.println("Task \"" + deleteTask + "\" successfully deleted."+ "\n");
+        }
+	}
 	/**
 	 * @param mapToAddTask the map that the user is adding a task to
 	 * @param taskCounter the index of in the map that the task is being added to
@@ -338,6 +343,7 @@ public class Board {
 		}
 		System.out.println();
 	}
+
 	
 	
 	/**
@@ -353,8 +359,8 @@ public class Board {
 	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
 	 * @param save is the string value that keeps track of which task you want to move
 	 */
-	private static void moveAdd(SortedMap<Long, String> mapToAddTask, long taskTimeStamp, String save) {
-		mapToAddTask.put(taskTimeStamp, save);
+	private static void moveAdd(SortedMap<Long, String> mapToAddTask, String taskName, long taskTimeStamp) {
+		mapToAddTask.put(taskTimeStamp, taskName);
 	}
 	
 	/**
@@ -362,10 +368,31 @@ public class Board {
 	 * @param mapMovingTo is the map that is where the task is being moved to
 	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
 	 */
-	private static void moveTask(SortedMap<Long, String> mapMovingFrom, SortedMap<Long, String> mapMovingTo, long taskTimeStamp) {
-		String save = mapMovingFrom.get(taskTimeStamp);
-		moveDelete(mapMovingFrom, taskTimeStamp);
-		moveAdd(mapMovingTo, mapMovingTo.size()+1, save);
+	private static void moveTask(SortedMap<Long, String> mapMovingFrom, SortedMap<Long, String> mapMovingTo, String taskName) {
+		
+        Iterator<Map.Entry<Long, String>> iterator = mapMovingFrom.entrySet().iterator(); 
+        long taskTimeStamp;
+        boolean taskExistsOnMapMovingFrom = false;
+        		
+        while (iterator.hasNext()) { 
+            Map.Entry<Long, String> 
+            entry = iterator.next(); 
+  
+            if (taskName.equals(entry.getValue())) {
+            	taskExistsOnMapMovingFrom = true;
+                taskTimeStamp = entry.getKey();
+                moveDelete(mapMovingFrom, taskTimeStamp);
+                moveAdd(mapMovingTo, taskName, taskTimeStamp);
+            } 
+        }
+        if(taskExistsOnMapMovingFrom == false) {
+        	System.out.println("Error: task \"" + taskName + "\" does not exist in this column."+ "\n");
+
+        }
+        else{ 
+        	System.out.println("Task \"" + taskName + "\" successfully moved."+ "\n");
+        }
+		
 	}
 	
 	/**
@@ -376,5 +403,4 @@ public class Board {
 		Timestamp timestamp = new Timestamp(currentTime);
 		return timestamp.toString();
 	}
-	
 }
