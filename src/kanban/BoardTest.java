@@ -26,6 +26,20 @@ class BoardTest {
 		assertNull(testMap.get(3), "working");
 
 	}
+	
+	void testMoveTask() {
+		SortedMap<Integer, String> testMapFrom = new TreeMap<Integer, String>();
+		SortedMap<Integer, String> testMapTo = new TreeMap<Integer, String>();
+		
+		testMapFrom.put(1, "studying");
+		String val = testMapFrom.get(1);
+		testMapFrom.remove(1,"studying");
+		testMapTo.put(1, val);
+		assertEquals(testMapFrom.size(), 0);
+		assertEquals(testMapFrom.size(), 1);
+		assertEquals("studying", testMapTo.get(1));
+		assertEquals(null, testMapFrom.get(1));
+	}
 
 	void testdisplayTaskMap(SortedMap<Long, String> mapToDisplay, String kanbanCategoryName) {
 		SortedMap<Integer, String> testMap = new TreeMap<Integer, String>();
