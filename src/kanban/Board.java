@@ -185,8 +185,6 @@ public class Board {
 						else if(branchTaskIsMovingToo == 5) {
 							moveTask(Backlog, Blocked, taskName);
 						}	       
-//					moveTask(Backlog, backlogCount);
-//					displayTaskMap(Backlog, "Backlog"); delete with permission
 				}
 
 		
@@ -205,8 +203,6 @@ public class Board {
 						else if(branchTaskIsMovingToo == 5) {
 							moveTask(InProgress, Blocked, taskName);
 						}	       
-//					moveTask(Backlog, backlogCount);
-//					displayTaskMap(Backlog, "Backlog");
 				}
 
 				//allows user to add tasks to verify
@@ -224,8 +220,6 @@ public class Board {
 						else if(branchTaskIsMovingToo == 5) {
 							moveTask(Verify, Blocked, taskName);
 						}	       
-//					moveTask(Backlog, backlogCount);
-//					displayTaskMap(Backlog, "Backlog");
 				}
 
 				//allows user to add tasks to complete
@@ -247,8 +241,6 @@ public class Board {
 						else if(branchTaskIsMovingToo == 5) {
 							moveTask(Complete, Blocked, taskName);
 						}	       
-//					moveTask(Backlog, backlogCount);
-//					displayTaskMap(Backlog, "Backlog");
 				}
 
 				//allows user to add tasks to blocked
@@ -270,8 +262,6 @@ public class Board {
 						else if(branchTaskIsMovingToo == 4) {
 							moveTask(Blocked, Complete, taskName);
 						}	       
-//					moveTask(Backlog, backlogCount);
-//					displayTaskMap(Backlog, "Backlog");
 				}
 
 				//allows user to return to the main menu
