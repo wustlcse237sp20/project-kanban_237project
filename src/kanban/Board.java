@@ -299,6 +299,7 @@ public class Board {
 		System.out.println("What task would you like to delete? Type in full name:");
 		Scanner delete = new Scanner(System.in);
 		String deleteTask = delete.nextLine();
+		boolean taskExistsOnMapDeletingFrom = false;
 		
         Iterator<Map.Entry<Long, String>> iterator = mapToDeleteTask.entrySet().iterator(); 
   
@@ -307,16 +308,18 @@ public class Board {
             entry = iterator.next(); 
   
             if (deleteTask.equals(entry.getValue())) {
+            	taskExistsOnMapDeletingFrom = true;
                 iterator.remove(); 
             } 
-            else {
-                throw new IllegalArgumentException("Task does not exist in this map");
-            }
         }
-        
-        System.out.println("Task \"" + deleteTask + "\" successfully deleted."+ "\n");
-	}
+        if(taskExistsOnMapDeletingFrom == false) {
+        	System.out.println("Error: task \"" + deleteTask + "\" does not exist in column."+ "\n");
 
+        }
+        else {
+        	System.out.println("Task \"" + deleteTask + "\" successfully deleted."+ "\n");
+        }
+	}
 	/**
 	 * @param mapToAddTask the map that the user is adding a task to
 	 * @param taskCounter the index of in the map that the task is being added to
@@ -371,21 +374,26 @@ public class Board {
 		
         Iterator<Map.Entry<Long, String>> iterator = mapMovingFrom.entrySet().iterator(); 
         long taskTimeStamp;
+        boolean taskExistsOnMapMovingFrom = false;
         		
         while (iterator.hasNext()) { 
             Map.Entry<Long, String> 
             entry = iterator.next(); 
   
             if (taskName.equals(entry.getValue())) {
+            	taskExistsOnMapMovingFrom = true;
                 taskTimeStamp = entry.getKey();
                 moveDelete(mapMovingFrom, taskTimeStamp);
                 moveAdd(mapMovingTo, taskName, taskTimeStamp);
             } 
-            else {
-            	throw new IllegalArgumentException("Task does not exist in this map");
-            }
         }
-        System.out.println("Task \"" + taskName + "\" successfully moved."+ "\n");
+        if(taskExistsOnMapMovingFrom == false) {
+        	System.out.println("Error: task \"" + taskName + "\" does not exist in this column."+ "\n");
+
+        }
+        else{ 
+        	System.out.println("Task \"" + taskName + "\" successfully moved."+ "\n");
+        }
 		
 	}
 	
