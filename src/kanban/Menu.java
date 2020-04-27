@@ -18,16 +18,16 @@ public class Menu {
 			int userInput = task.nextInt();
 
 			if(userInput == 1){
-				addATask();
+				selectBranchToAddTo();
 			}
 			else if(userInput == 2) {
-				deleteATask();
+				selectBranchToDeleteFrom();
 			}
 			else if(userInput == 3) {
 				displayATask();
 			}
 			else if(userInput == 4) {
-				moveATask();
+				selectBranchToMoveTaskFromAndTo();
 			}
 			else {
 				System.out.println("Enter a valid number: ");
@@ -36,75 +36,58 @@ public class Menu {
 		}
 	}
 
-	static void addATask() {
+	static void selectBranchToAddTo() {
 		while(true) {
 			System.out.println("Where would you like to add this task?");
-			System.out.println("1 = Backlog");
-			System.out.println("2 = InProgress");
-			System.out.println("3 = Verify");
-			System.out.println("4 = Complete");
-			System.out.println("5 = Blocked");
-			System.out.println("6 = Go Back");
-
+			listBranchOptionsToConsole();
+			
 			//close leak
 			Scanner branchInput = new Scanner(System.in);
 
-			try {
-				int branch = branchInput.nextInt();
+			String branch = branchInput.nextLine();
 
-				if(branch == 6) {
-					menuChoice();
-				}
-
-				else if(branch < 1 || branch > 6) {
-					continue;
-				}
-
-				else {
-					Board.displayTaskMap(getBranch(branch), getBranchName(branch));
-					Board.addTask(getBranch(branch), System.currentTimeMillis());
-				}
+			if(branch == "6") {
+				menuChoice();
 			}
-			catch(InputMismatchException e) {
-				System.out.println("Please add a valid branch number");
+
+			else if(getBranchName(branch) == null) {
 				continue;
 			}
-		}	
-	}
 
-	static void deleteATask() {
+			else {
+				Board.displayTaskMap(getBranch(branch), getBranchName(branch));
+				Board.addTask(getBranch(branch), System.currentTimeMillis());
+				menuChoice();
+			}
+		}
+	}	
+
+
+	static void selectBranchToDeleteFrom() {
 		while(true) {
 			System.out.println("Where would you like to delete the task?");
-			System.out.println("1 = Backlog");
-			System.out.println("2 = InProgress");
-			System.out.println("3 = Verify");
-			System.out.println("4 = Complete");
-			System.out.println("5 = Blocked");
-			System.out.println("6 = Go Back");
+			listBranchOptionsToConsole();
 
 			Scanner branchInput = new Scanner(System.in);
-			try {
-				int branch = branchInput.nextInt();
 
-				if(branch == 6) {
-					menuChoice();
-				}
+			String branch = branchInput.nextLine();
 
-				else if(branch < 1 || branch > 6) {
-					continue;
-				}
-
-				else {
-					Board.displayTaskMap(getBranch(branch), getBranchName(branch));
-					Board.deleteTask(getBranch(branch));
-				}
+			if(branch == "6") {
+				menuChoice();
 			}
-			catch(InputMismatchException e) {
-				System.out.println("Please add a valid branch number");
+
+			else if(getBranchName(branch) == null) {
 				continue;
+			}
+
+			else {
+				Board.displayTaskMap(getBranch(branch), getBranchName(branch));
+				Board.deleteTask(getBranch(branch));
+				menuChoice();
 			}
 		}
 	}
+
 
 	static void displayATask() {
 		Board.displayTaskMap(Board.Backlog, "Backlog");
@@ -114,21 +97,21 @@ public class Menu {
 		Board.displayTaskMap(Board.Blocked, "Blocked");	
 	}
 
-	static SortedMap<Long, String> getBranch(int branch) {
+	static SortedMap<Long, String> getBranch(String branch) {
 
-		if(branch == 1) {
+		if(branch.equals("1")) {
 			return Board.Backlog;			
 		}
-		else if(branch == 2) {
+		else if(branch.equals("2")) {
 			return Board.InProgress;
 		}
-		else if(branch == 3) {
+		else if(branch.equals("3")) {
 			return Board.Verify;
 		}
-		else if(branch == 4) {
+		else if(branch.equals("4")) {
 			return Board.Complete;
 		}
-		else if(branch == 5) {
+		else if(branch.equals("5")) {
 			return Board.Blocked;
 		}
 		else {
@@ -137,91 +120,76 @@ public class Menu {
 
 	}
 
-	static String getBranchName(int branch) {
+	static String getBranchName(String branch) {
 
-		if(branch == 1) {
+		if(branch.equals("1")) {
 			return "Backlog";			
 		}
-		else if(branch == 2) {
+		else if(branch.equals("2")) {
 			return "InProgress";
 		}
-		else if(branch == 3) {
+		else if(branch.equals("3")) {
 			return "Verify";
 		}
-		else if(branch == 4) {
+		else if(branch.equals("4")) {
 			return "Complete";
 		}
-		else if(branch == 5) {
+		else if(branch.equals("5")) {
 			return "Blocked";
 		}
 		else {
-			return "null";
+			return null;
 		}
 
 	}
+	
+	static void listBranchOptionsToConsole() {
+		System.out.println("1 = Backlog");
+		System.out.println("2 = InProgress");
+		System.out.println("3 = Verify");
+		System.out.println("4 = Complete");
+		System.out.println("5 = Blocked");
+		System.out.println("6 = Go Back");
+	}
 
 
-	static void moveATask() {
+	static void selectBranchToMoveTaskFromAndTo() {
 
 		while(true) {
-
-			System.out.println("Where would you like to move this task from?");
-			System.out.println("1 = Backlog");
-			System.out.println("2 = InProgress");
-			System.out.println("3 = Verify");
-			System.out.println("4 = Complete");
-			System.out.println("5 = Blocked");
-			System.out.println("6 = Go Back");
-
 			//TaskNumber
 			Scanner whichBranch = new Scanner(System.in);
 			Scanner whichTask = new Scanner(System.in);
 			Scanner toBranch = new Scanner(System.in);
-			try {
-				int branchTaskIsMovingFrom = whichBranch.nextInt();
 
-				if(branchTaskIsMovingFrom == 6) {
-					menuChoice();
-				}
+			System.out.println("Where would you like to move this task from?");
+			listBranchOptionsToConsole();
 
-				else if(getBranchName(branchTaskIsMovingFrom) == null) {
-					continue;
-				}
+			String branchTaskIsMovingFrom = whichBranch.nextLine();
 
+			System.out.println("Which task would you like to move?");
+			System.out.println("Enter a valid key: ");
 
-				System.out.println("Which task would you like to move?");
-				System.out.println("Enter a valid key: ");
+			String taskName = whichTask.nextLine();
 
-				//close leak
-				
-				String taskName = whichTask.nextLine();
+			System.out.println("Where would you like to move this task to?");
+			listBranchOptionsToConsole();
 
-				System.out.println("Where would you like to move this task to?");
-				System.out.println("1 = Backlog");
-				System.out.println("2 = InProgress");
-				System.out.println("3 = Verify");
-				System.out.println("4 = Complete");
-				System.out.println("5 = Blocked");
-				System.out.println("6 = Go Back");
+			String branchTaskIsMovingTo = toBranch.nextLine();
 
-				int branchTaskIsMovingTo = toBranch.nextInt();
-
-				if(branchTaskIsMovingTo == 6) {
-					menuChoice();
-				}
-
-				else if(getBranchName(branchTaskIsMovingTo) == null) {
-					continue;
-				}
-				else {
-					Board.moveTask(getBranch(branchTaskIsMovingFrom), getBranch(branchTaskIsMovingTo), taskName);
-				}
+			if(branchTaskIsMovingFrom.equals("6")|| branchTaskIsMovingTo.equals("6")) {
+				menuChoice();
 			}
-			catch(InputMismatchException e) {
-				System.out.println("Please add a valid branch number");
+
+			else if(getBranchName(branchTaskIsMovingTo) == null || getBranchName(branchTaskIsMovingFrom) == null) {
+				System.out.println("Error: please enter valid column names");
 				continue;
 			}
+			else {
+				Board.moveTask(getBranch(branchTaskIsMovingFrom), getBranch(branchTaskIsMovingTo), taskName);
+				menuChoice();
+			}
 		}
+
 	}
 }
 

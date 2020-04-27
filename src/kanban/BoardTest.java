@@ -17,7 +17,7 @@ class BoardTest {
 		assertEquals(testMap.size(), 1);
 		assertEquals("studying", testMap.get(1));
 	}
-
+	@Test
 	void testDeleteTask() {
 		SortedMap<Integer, String> testMap = new TreeMap<Integer, String>();
 		testMap.put(3, "working");
@@ -26,7 +26,7 @@ class BoardTest {
 		assertNull(testMap.get(3), "working");
 
 	}
-	
+	@Test
 	void testMoveTask() {
 		SortedMap<Integer, String> testMapFrom = new TreeMap<Integer, String>();
 		SortedMap<Integer, String> testMapTo = new TreeMap<Integer, String>();
@@ -40,8 +40,24 @@ class BoardTest {
 		assertEquals("studying", testMapTo.get(1));
 		assertEquals(null, testMapFrom.get(1));
 	}
-
-	void testdisplayTaskMap(SortedMap<Long, String> mapToDisplay, String kanbanCategoryName) {
+	@Test
+	void testRemoveTaskFromOldColumn() {
+		SortedMap<Integer, String> testMap = new TreeMap<Integer, String>();
+		testMap.put(54, "almost done with 237");
+		testMap.remove(54, "almost done with 237");
+		assertEquals(testMap.size(), 0);
+		assertNull(testMap.get(54), "almost done with 237");
+	}
+	@Test
+	void testAddTaskToNewColumn() {
+		SortedMap<Integer, String> testMap = new TreeMap<Integer, String>();
+		testMap.put(434, "working on 237");
+		assertEquals(testMap.size(), 1);
+		assertEquals("working on 237", testMap.get(434));
+	}
+	
+	@Test
+	void testDisplayTaskMap() {
 		SortedMap<Integer, String> testMap = new TreeMap<Integer, String>();
 		int[] arr = new int[3];
 		String[] arr2 = new String[3];
@@ -57,7 +73,7 @@ class BoardTest {
 		testMap.put(2, "im");
 		testMap.put(3, "working");
 		int i = 0;
-		for (Map.Entry<Long, String> entry : mapToDisplay.entrySet()) {
+		for (Map.Entry<Integer, String> entry : testMap.entrySet()) {
 			assertEquals(arr[i] + ", " + arr2[i], entry.getKey() + ", " + entry.getValue());		
 			i++;
 		}

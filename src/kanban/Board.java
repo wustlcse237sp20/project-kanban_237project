@@ -82,25 +82,25 @@ public class Board {
 	
 	
 	/**
-	 * @param mapToDeleteTask is the map that contains the task to be deleted
+	 * @param mapToDeleteTask is the origin map of the task to be moved
 	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
 	 */
-	 static void moveDelete(SortedMap<Long, String> mapToDeleteTask, long taskTimeStamp) {
+	 static void removeTaskFromOldColumn(SortedMap<Long, String> mapToDeleteTask, long taskTimeStamp) {
 		mapToDeleteTask.remove(taskTimeStamp);
 	}
 	
 	/**
-	 * @param mapToAddTask is the map that contains the task to be added
+	 * @param mapToAddTask is the destination map of the task to be moved
 	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
 	 * @param save is the string value that keeps track of which task you want to move
 	 */
-	 static void moveAdd(SortedMap<Long, String> mapToAddTask, String taskName, long taskTimeStamp) {
+	 static void addTaskToNewColumn(SortedMap<Long, String> mapToAddTask, String taskName, long taskTimeStamp) {
 		mapToAddTask.put(taskTimeStamp, taskName);
 	}
 	
 	/**
-	 * @param mapMovingFrom is the map that contains the task to be moved
-	 * @param mapMovingTo is the map that is where the task is being moved to
+	 * @param mapMovingFrom is the origin map of the task to be moved
+	 * @param mapMovingTo is the destination map of the task to be moved
 	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
 	 */
 	 static void moveTask(SortedMap<Long, String> mapMovingFrom, SortedMap<Long, String> mapMovingTo, String taskName) {
@@ -116,8 +116,8 @@ public class Board {
             if (taskName.equals(entry.getValue())) {
             	taskExistsOnMapMovingFrom = true;
                 taskTimeStamp = entry.getKey();
-                moveDelete(mapMovingFrom, taskTimeStamp);
-                moveAdd(mapMovingTo, taskName, taskTimeStamp);
+                removeTaskFromOldColumn(mapMovingFrom, taskTimeStamp);
+                addTaskToNewColumn(mapMovingTo, taskName, taskTimeStamp);
             } 
         }
         if(taskExistsOnMapMovingFrom == false) {
