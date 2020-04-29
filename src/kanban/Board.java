@@ -10,28 +10,71 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class Board {
-	static SortedMap<Long, String> Backlog = new TreeMap<Long, String>();
-	static SortedMap<Long, String> InProgress = new TreeMap<Long, String>();
-	static SortedMap<Long, String> Verify = new TreeMap<Long, String>();
-	static SortedMap<Long, String> Complete = new TreeMap<Long, String>();
-	static SortedMap<Long, String> Blocked = new TreeMap<Long, String>();
 	
-	static String taskName;
+	static Menu menu = new Menu();
 	
-	public static void main(String[] args) {
-			
-		Menu.menuChoice();
+	private SortedMap<Long, String> Backlog;
+	private SortedMap<Long, String> InProgress;
+	private SortedMap<Long, String> Verify;
+	private SortedMap<Long, String> Complete;
+	private SortedMap<Long, String> Blocked;
+	private String taskname;
+	
+	public Board() {
+		this.Backlog = new TreeMap<>();
+		this.InProgress = new TreeMap<>();
+		this.Verify = new TreeMap<>();
+		this.Complete = new TreeMap<>();
+		this.Blocked = new TreeMap<>();
+	}
+	
 
+	public SortedMap<Long, String> getBacklog() {
+		return Backlog;
+	}
+
+
+	public SortedMap<Long, String> getInProgress() {
+		return InProgress;
+	}
+
+
+	public SortedMap<Long, String> getVerify() {
+		return Verify;
+	}
+
+
+	public SortedMap<Long, String> getComplete() {
+		return Complete;
+	}
+
+
+	public SortedMap<Long, String> getBlocked() {
+		return Blocked;
+	}
+
+
+	public String getTaskname() {
+		return taskname;
+	}
+
+
+	public void setTaskname(String taskname) {
+		this.taskname = taskname;
+	}
+
+
+	public static void main(String[] args) {
+		menu.menuChoice();
 	}
 
 	/**
 	 * @param mapToDeleteTask the map that the user is deleting a task from
 	 * @return void
 	 */
-	static void deleteTask(SortedMap<Long, String> mapToDeleteTask) {
+	public void deleteTask(SortedMap<Long, String> mapToDeleteTask) {
 		System.out.println("What task would you like to delete? Type in full name:");
-		Scanner delete = new Scanner(System.in);
-		String deleteTask = delete.nextLine();
+		String deleteTask = returnUserInput();
 		boolean taskExistsOnMapDeletingFrom = false;
 		
         Iterator<Map.Entry<Long, String>> iterator = mapToDeleteTask.entrySet().iterator(); 
@@ -58,12 +101,11 @@ public class Board {
 	 * @param taskCounter the index of in the map that the task is being added to
 	 * @return void
 	 */
-	 static void addTask(SortedMap<Long, String> mapToAddTask, long taskTimeStamp) {
+	 public void addTask(SortedMap<Long, String> mapToAddTask, long taskTimeStamp) {
 		System.out.println("What task would you like to add?");
-		Scanner add = new Scanner(System.in);
-		String addTask = add.nextLine();
+		String addTask = returnUserInput();
 		mapToAddTask.put(taskTimeStamp, addTask);
-
+		System.out.println("Task \"" + addTask + "\" successfully deleted."+ "\n");
 	}
 
 	/**
@@ -71,7 +113,7 @@ public class Board {
 	 * @param kanbanCategoryName the category of the Kanban board that the map represents
 	 * @return void
 	 */
-	 static void displayTaskMap(SortedMap<Long, String> mapToDisplay, String kanbanCategoryName) {
+	 public void displayTaskMap(SortedMap<Long, String> mapToDisplay, String kanbanCategoryName) {
 		System.out.println("Kanban Board Category: " + kanbanCategoryName);
 		for (Map.Entry<Long, String> entry : mapToDisplay.entrySet()) {
 			System.out.println("Key: " + generateTimestamp(entry.getKey()) + " Value: " + entry.getValue());
@@ -85,7 +127,7 @@ public class Board {
 	 * @param mapToDeleteTask is the origin map of the task to be moved
 	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
 	 */
-	 static void removeTaskFromOldColumn(SortedMap<Long, String> mapToDeleteTask, long taskTimeStamp) {
+	 public void removeTaskFromOldColumn(SortedMap<Long, String> mapToDeleteTask, long taskTimeStamp) {
 		mapToDeleteTask.remove(taskTimeStamp);
 	}
 	
@@ -94,7 +136,7 @@ public class Board {
 	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
 	 * @param save is the string value that keeps track of which task you want to move
 	 */
-	 static void addTaskToNewColumn(SortedMap<Long, String> mapToAddTask, String taskName, long taskTimeStamp) {
+	 public void addTaskToNewColumn(SortedMap<Long, String> mapToAddTask, String taskName, long taskTimeStamp) {
 		mapToAddTask.put(taskTimeStamp, taskName);
 	}
 	
@@ -103,7 +145,7 @@ public class Board {
 	 * @param mapMovingTo is the destination map of the task to be moved
 	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
 	 */
-	 static void moveTask(SortedMap<Long, String> mapMovingFrom, SortedMap<Long, String> mapMovingTo, String taskName) {
+	 public void moveTask(SortedMap<Long, String> mapMovingFrom, SortedMap<Long, String> mapMovingTo, String taskName) {
 		
         Iterator<Map.Entry<Long, String>> iterator = mapMovingFrom.entrySet().iterator(); 
         long taskTimeStamp;
@@ -134,8 +176,15 @@ public class Board {
 	 * @param currentTime is the time that is associated with when a task is created by the user
 	 * @return we are returning the time in a formatted string value
 	 */
-	public static String generateTimestamp(long currentTime) {
+	public String generateTimestamp(long currentTime) {
 		Timestamp timestamp = new Timestamp(currentTime);
 		return timestamp.toString();
+	}
+	
+	public String returnUserInput() {
+		Scanner scanner = new Scanner(System.in);
+		String userInput = scanner.nextLine();
+		scanner.close();
+		return userInput;
 	}
 }
