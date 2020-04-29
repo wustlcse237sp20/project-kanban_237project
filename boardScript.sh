@@ -1,5 +1,7 @@
 #!/bin/bash
-cd src
-cd kanban
-javac Board.java
-java Board.java
+cd src/kanban
+javac -cp ../ Board.java
+javac -cp ../ Menu.java
+cd ..
+java kanban/Board
+cd ../../
