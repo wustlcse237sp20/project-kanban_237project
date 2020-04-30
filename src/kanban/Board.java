@@ -74,7 +74,7 @@ public class Board {
 	 */
 	public void deleteTask(SortedMap<Long, String> mapToDeleteTask) {
 		System.out.println("What task would you like to delete? Type in full name:");
-		String deleteTask = returnUserInput();
+		String deleteTask = returnUserInputBoard();
 		boolean taskExistsOnMapDeletingFrom = false;
 		
         Iterator<Map.Entry<Long, String>> iterator = mapToDeleteTask.entrySet().iterator(); 
@@ -103,9 +103,9 @@ public class Board {
 	 */
 	 public void addTask(SortedMap<Long, String> mapToAddTask, long taskTimeStamp) {
 		System.out.println("What task would you like to add?");
-		String addTask = returnUserInput();
+		String addTask = returnUserInputBoard();
 		mapToAddTask.put(taskTimeStamp, addTask);
-		System.out.println("Task \"" + addTask + "\" successfully deleted."+ "\n");
+		System.out.println("Task \"" + addTask + "\" successfully added."+ "\n");
 	}
 
 	/**
@@ -181,10 +181,9 @@ public class Board {
 		return timestamp.toString();
 	}
 	
-	public String returnUserInput() {
+	public String returnUserInputBoard() {
 		Scanner scanner = new Scanner(System.in);
 		String userInput = scanner.nextLine();
-		scanner.close();
 		return userInput;
 	}
 }

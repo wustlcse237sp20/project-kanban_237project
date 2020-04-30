@@ -11,11 +11,8 @@ public class Menu {
 	public void menuChoice() {
 
 		while(true) {
-			System.out.println("Enter 1 if you would like to add a task");
-			System.out.println("Enter 2 if you would like to delete a task");
-			System.out.println("Enter 3 if you would like to display the Kanban Board");
-			System.out.println("Enter 4 if you would like to move a task");
-
+			displayMenuOptions();
+			
 			String userInput = returnUserInput();
 
 			if(userInput.equals("1")){
@@ -94,6 +91,7 @@ public class Menu {
 		board.displayTaskMap(board.getComplete(), "Complete");
 		board.displayTaskMap(board.getBlocked(), "Blocked");	
 	}
+	
 
 	public SortedMap<Long, String> getBranch(String branch) {
 
@@ -141,6 +139,13 @@ public class Menu {
 
 	}
 	
+	public void displayMenuOptions() {
+		System.out.println("Enter 1 if you would like to add a task");
+		System.out.println("Enter 2 if you would like to delete a task");
+		System.out.println("Enter 3 if you would like to display the Kanban Board");
+		System.out.println("Enter 4 if you would like to move a task");
+	}
+	
 	public void listBranchOptionsToConsole() {
 		System.out.println("1 = Backlog");
 		System.out.println("2 = InProgress");
@@ -153,7 +158,6 @@ public class Menu {
 	public String returnUserInput() {
 		Scanner scanner = new Scanner(System.in);
 		String userInput = scanner.nextLine();
-		scanner.close();
 		return userInput;
 	}
 
