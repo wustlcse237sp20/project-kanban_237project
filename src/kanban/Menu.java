@@ -5,14 +5,14 @@ import java.util.Scanner;
 import java.util.SortedMap;
 
 public class Menu {
-	
+
 	Board board = new Board();
 
 	public void menuChoice() {
 
 		while(true) {
 			displayMenuOptions();
-			
+
 			String userInput = returnUserInput();
 
 			if(userInput.equals("1")){
@@ -51,7 +51,6 @@ public class Menu {
 		}
 	}	
 
-
 	public void selectBranchToDeleteFrom() {
 		while(true) {
 			System.out.println("Where would you like to delete the task?");
@@ -71,15 +70,32 @@ public class Menu {
 		}
 	}
 
-
 	public void displayATask() {
-		board.displayTaskMap(board.getBacklog(), "Backlog");
-		board.displayTaskMap(board.getInProgress(), "InProgress");
-		board.displayTaskMap(board.getVerify(), "Verify");
-		board.displayTaskMap(board.getComplete(), "Complete");
-		board.displayTaskMap(board.getBlocked(), "Blocked");	
+		while(true) {
+			System.out.println("Would you like to display tasks in alphabetical order? (y/n)");
+			String yesOrNo = returnUserInput();
+			if(yesOrNo.equals("y")) {
+				board.displayTaskMapAlphabetical(board.getBacklog(), "Backlog");
+				board.displayTaskMapAlphabetical(board.getInProgress(), "InProgress");
+				board.displayTaskMapAlphabetical(board.getVerify(), "Verify");
+				board.displayTaskMapAlphabetical(board.getComplete(), "Complete");
+				board.displayTaskMapAlphabetical(board.getBlocked(), "Blocked");
+				return;
+			}
+			else if (yesOrNo.equals("n")) {
+				board.displayTaskMap(board.getBacklog(), "Backlog");
+				board.displayTaskMap(board.getInProgress(), "InProgress");
+				board.displayTaskMap(board.getVerify(), "Verify");
+				board.displayTaskMap(board.getComplete(), "Complete");
+				board.displayTaskMap(board.getBlocked(), "Blocked");
+				return;
+			}
+			else {
+				System.out.println("Error: Invalid input.");
+				continue;
+			}
+		}
 	}
-	
 
 	public SortedMap<Long, String> getBranch(String branch) {
 
@@ -129,14 +145,14 @@ public class Menu {
 			return null;
 		}
 	}
-	
+
 	public void displayMenuOptions() {
 		System.out.println("Enter 1 if you would like to add a task");
 		System.out.println("Enter 2 if you would like to delete a task");
 		System.out.println("Enter 3 if you would like to display the Kanban Board");
 		System.out.println("Enter 4 if you would like to move a task");
 	}
-	
+
 	public void listBranchOptionsToConsole() {
 		System.out.println("1 = Backlog");
 		System.out.println("2 = InProgress");
@@ -145,7 +161,7 @@ public class Menu {
 		System.out.println("5 = Blocked");
 		System.out.println("6 = Go Back");
 	}
-	
+
 	public String returnUserInput() {
 		Scanner scanner = new Scanner(System.in);
 		String userInput = scanner.nextLine();
@@ -158,14 +174,14 @@ public class Menu {
 		String taskName = returnUserInput();
 		return taskName;
 	}
-	
+
 	public String getBranchTaskMoveFrom() {
 		System.out.println("Where would you like to move this task from?");
 		listBranchOptionsToConsole();
 		String branchTaskIsMovingFrom = returnUserInput();
 		return branchTaskIsMovingFrom;
 	}
-	
+
 	public String getBranchTaskMoveTo() {
 		System.out.println("Where would you like to move this task to?");
 		listBranchOptionsToConsole();
