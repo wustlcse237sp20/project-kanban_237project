@@ -6,8 +6,8 @@ Haewon Shin, Raeka Attari, Elijah Olasunkanmi, Shruthi Ramalingam
 What user stories were completed this iteration?
 A developer/student should be able to optionally sort tasks by alphabetical order when viewing the board.
 A developer/student should be able to view a notification on the console for successful:
-	addition
-	deletion
+	addition,
+	deletion, and
 	moving
 	of a task.
 
@@ -23,5 +23,5 @@ No functionality is completely hindered, but the current Kanban board is unable 
 The user input system we used (a Scanner) also demonstrates a memory leak, although we have greatly reduced incidences of leaks by using only one Scanner per class and separating them from the methods.
 
 What commands are needed to compile and run your code from the command line (or better yet, provide a script that people can use to run your program!)
-There is a script called boardScript.sh in the main project folder (project-kanban_237project). Running the script in the terminal (./boardScript.sh) should allow the user to access the program from the terminal.
+There is a script called boardScript.sh in the main project folder (project-kanban_237project). Running the script in the terminal (./boardScript.sh) should allow the user to access the program from the terminal from the master branch.
 
