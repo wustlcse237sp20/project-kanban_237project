@@ -38,15 +38,8 @@ public class Menu {
 		while(true) {
 			System.out.println("Where would you like to add this task?");
 			listBranchOptionsToConsole();
-
 			String branch = returnUserInput();
-
-			if(branch == "6") {
-				menuChoice();
-			}
-
-			else if(getBranchName(branch) == null) {
-				System.out.println("Error: please enter valid column number");
+			if(getBranchName(branch) == null) {
 				continue;
 			}
 
@@ -66,12 +59,7 @@ public class Menu {
 
 			String branch = returnUserInput();
 
-			if(branch == "6") {
-				menuChoice();
-			}
-
-			else if(getBranchName(branch) == null) {
-				System.out.println("Error: please enter valid column number");
+			if(getBranchName(branch) == null) {
 				continue;
 			}
 
@@ -113,7 +101,6 @@ public class Menu {
 		else {
 			return null;
 		}
-
 	}
 
 	public String getBranchName(String branch) {
@@ -133,10 +120,14 @@ public class Menu {
 		else if(branch.equals("5")) {
 			return "Blocked";
 		}
+		else if(branch.equals("6")) {
+			menuChoice();
+			return "Menu";
+		}
 		else {
+			System.out.println("Error: please enter valid column number");
 			return null;
 		}
-
 	}
 	
 	public void displayMenuOptions() {
@@ -161,33 +152,37 @@ public class Menu {
 		return userInput;
 	}
 
+	public String getTaskUserWantsToMove() {
+		System.out.println("Which task would you like to move?");
+		System.out.println("Enter a valid key: ");
+		String taskName = returnUserInput();
+		return taskName;
+	}
+	
+	public String getBranchTaskMoveFrom() {
+		System.out.println("Where would you like to move this task from?");
+		listBranchOptionsToConsole();
+		String branchTaskIsMovingFrom = returnUserInput();
+		return branchTaskIsMovingFrom;
+	}
+	
+	public String getBranchTaskMoveTo() {
+		System.out.println("Where would you like to move this task to?");
+		listBranchOptionsToConsole();
+		String branchTaskIsMovingTo = returnUserInput();
+		return branchTaskIsMovingTo;
+	}
 
 	public void selectBranchToMoveTaskFromAndTo() {
-
 		while(true) {
-			System.out.println("Where would you like to move this task from?");
-			listBranchOptionsToConsole();
-
-			String branchTaskIsMovingFrom = returnUserInput();
-
-			board.displayTaskMap(getBranch(branchTaskIsMovingFrom), getBranchName(branchTaskIsMovingFrom));
-			
-			System.out.println("Which task would you like to move?");
-			System.out.println("Enter a valid key: ");
-
-			String taskName = returnUserInput();
-
-			System.out.println("Where would you like to move this task to?");
-			listBranchOptionsToConsole();
-
-			String branchTaskIsMovingTo = returnUserInput();
-
-			if(branchTaskIsMovingFrom.equals("6")|| branchTaskIsMovingTo.equals("6")) {
-				menuChoice();
+			String branchTaskIsMovingFrom = getBranchTaskMoveFrom();
+			if(getBranchName(branchTaskIsMovingFrom) == null) {
+				continue;
 			}
-
-			else if(getBranchName(branchTaskIsMovingTo) == null || getBranchName(branchTaskIsMovingFrom) == null) {
-				System.out.println("Error: please enter valid column number");
+			board.displayTaskMap(getBranch(branchTaskIsMovingFrom), getBranchName(branchTaskIsMovingFrom));	
+			String taskName = getTaskUserWantsToMove();
+			String branchTaskIsMovingTo = getBranchTaskMoveTo();
+			if(getBranchName(branchTaskIsMovingTo) == null) {
 				continue;
 			}
 			else {
@@ -195,7 +190,7 @@ public class Menu {
 				menuChoice();
 			}
 		}
-
 	}
+
 }
 
