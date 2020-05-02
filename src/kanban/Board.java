@@ -126,7 +126,6 @@ public class Board {
 	/**
 	 * @param mapToDisplay the map to be resorted by alphabetical value (task name)
 	 * @param kanbanCategoryName the category of the Kanban board that the map represents
-	 * @return void
 	 */
 	public void displayTaskMapAlphabetical(SortedMap<Long, String> mapToDisplay, String kanbanCategoryName) {
         List<Map.Entry<Long, String>> list = new LinkedList<Map.Entry<Long, String>>(mapToDisplay.entrySet());
@@ -147,6 +146,7 @@ public class Board {
 	/**
 	 * @param mapToDeleteTask is the origin map of the task to be moved
 	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
+	 * @return void
 	 */
 	public void removeTaskFromOldColumn(SortedMap<Long, String> mapToDeleteTask, long taskTimeStamp) {
 		mapToDeleteTask.remove(taskTimeStamp);
@@ -156,6 +156,7 @@ public class Board {
 	 * @param mapToAddTask is the destination map of the task to be moved
 	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
 	 * @param save is the string value that keeps track of which task you want to move
+	 * @return void
 	 */
 	public void addTaskToNewColumn(SortedMap<Long, String> mapToAddTask, String taskName, long taskTimeStamp) {
 		mapToAddTask.put(taskTimeStamp, taskName);
@@ -164,30 +165,28 @@ public class Board {
 	/**
 	 * @param mapMovingFrom is the origin map of the task to be moved
 	 * @param mapMovingTo is the destination map of the task to be moved
-	 * @param taskTimeStamp is the long data type time that is the time associated with when a task was created
+	 * @param taskName is a String representing the name of the task to be moved
+	 * @return void
 	 */
 	public void moveTask(SortedMap<Long, String> mapMovingFrom, SortedMap<Long, String> mapMovingTo, String taskName) {
-
-		Iterator<Map.Entry<Long, String>> iterator = mapMovingFrom.entrySet().iterator(); 
 		long taskTimeStamp;
 		boolean taskExistsOnMapMovingFrom = false;
 
-		while (iterator.hasNext()) { 
-			Map.Entry<Long, String> 
-			entry = iterator.next(); 
-
+		for (Map.Entry<Long, String> entry : mapMovingFrom.entrySet()) { 
 			if (taskName.equals(entry.getValue())) {
 				taskExistsOnMapMovingFrom = true;
 				taskTimeStamp = entry.getKey();
-				removeTaskFromOldColumn(mapMovingFrom, taskTimeStamp);
 				addTaskToNewColumn(mapMovingTo, taskName, taskTimeStamp);
+				removeTaskFromOldColumn(mapMovingFrom, taskTimeStamp);
+				break;
 			} 
 		}
+		
 		if(taskExistsOnMapMovingFrom == false) {
 			System.out.println("Error: task \"" + taskName + "\" does not exist in this column."+ "\n");
 
 		}
-		else{ 
+		else { 
 			System.out.println("Task \"" + taskName + "\" successfully moved."+ "\n");
 		}
 
@@ -195,13 +194,16 @@ public class Board {
 
 	/**
 	 * @param currentTime is the time that is associated with when a task is created by the user
-	 * @return we are returning the time in a formatted string value
+	 * @return time in a formatted string value
 	 */
 	public String generateTimestamp(long currentTime) {
 		Timestamp timestamp = new Timestamp(currentTime);
 		return timestamp.toString();
 	}
 
+	/**
+	 * @return String representation of user input
+	 */
 	public String returnUserInputBoard() {
 		Scanner scanner = new Scanner(System.in);
 		String userInput = scanner.nextLine();
