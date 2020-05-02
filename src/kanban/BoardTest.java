@@ -36,7 +36,7 @@ class BoardTest {
 		testMapFrom.remove(1,"studying");
 		testMapTo.put(1, val);
 		assertEquals(testMapFrom.size(), 0);
-		assertEquals(testMapFrom.size(), 1);
+		assertEquals(testMapTo.size(), 1);
 		assertEquals("studying", testMapTo.get(1));
 		assertEquals(null, testMapFrom.get(1));
 	}
@@ -77,5 +77,23 @@ class BoardTest {
 			assertEquals(arr[i] + ", " + arr2[i], entry.getKey() + ", " + entry.getValue());		
 			i++;
 		}
-	}	
+	}
+	
+	@Test
+	void testGetBranchName() {
+		Menu testMenu = new Menu();
+		String result1 = testMenu.getBranchName("1");
+		assertEquals("Backlog", result1);
+	}
+	
+	@Test
+	void testGetBranch() {
+		Menu testMenu = new Menu();
+		Board testbrd = new Board();
+		testMenu.board = testbrd;
+		SortedMap<Long, String> testMap = new TreeMap<Long, String>();
+		testMap = testMenu.getBranch("1");
+		testbrd.addTask(testMap, System.currentTimeMillis());
+		testbrd.displayTaskMap(testMap, "1");
+	}
 }
