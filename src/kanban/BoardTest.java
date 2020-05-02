@@ -17,6 +17,7 @@ class BoardTest {
 		assertEquals(testMap.size(), 1);
 		assertEquals("studying", testMap.get(1));
 	}
+
 	@Test
 	void testDeleteTask() {
 		SortedMap<Integer, String> testMap = new TreeMap<Integer, String>();
@@ -26,11 +27,12 @@ class BoardTest {
 		assertNull(testMap.get(3), "working");
 
 	}
+
 	@Test
 	void testMoveTask() {
 		SortedMap<Integer, String> testMapFrom = new TreeMap<Integer, String>();
 		SortedMap<Integer, String> testMapTo = new TreeMap<Integer, String>();
-		
+
 		testMapFrom.put(1, "studying");
 		String val = testMapFrom.get(1);
 		testMapFrom.remove(1,"studying");
@@ -40,6 +42,7 @@ class BoardTest {
 		assertEquals("studying", testMapTo.get(1));
 		assertEquals(null, testMapFrom.get(1));
 	}
+
 	@Test
 	void testRemoveTaskFromOldColumn() {
 		SortedMap<Integer, String> testMap = new TreeMap<Integer, String>();
@@ -48,6 +51,7 @@ class BoardTest {
 		assertEquals(testMap.size(), 0);
 		assertNull(testMap.get(54), "almost done with 237");
 	}
+
 	@Test
 	void testAddTaskToNewColumn() {
 		SortedMap<Integer, String> testMap = new TreeMap<Integer, String>();
@@ -55,8 +59,8 @@ class BoardTest {
 		assertEquals(testMap.size(), 1);
 		assertEquals("working on 237", testMap.get(434));
 	}
-	
-	@Test
+
+	@Test	
 	void testDisplayTaskMap() {
 		SortedMap<Integer, String> testMap = new TreeMap<Integer, String>();
 		int[] arr = new int[3];
@@ -78,14 +82,14 @@ class BoardTest {
 			i++;
 		}
 	}
-	
+
 	@Test
 	void testGetBranchName() {
 		Menu testMenu = new Menu();
 		String result1 = testMenu.getBranchName("1");
 		assertEquals("Backlog", result1);
 	}
-	
+
 	@Test
 	void testGetBranch() {
 		Menu testMenu = new Menu();
@@ -95,5 +99,18 @@ class BoardTest {
 		testMap = testMenu.getBranch("1");
 		testbrd.addTask(testMap, System.currentTimeMillis());
 		testbrd.displayTaskMap(testMap, "1");
+	}
+
+	@Test
+	void testDisplayTaskMapAlphabetical() {
+		Menu testMenu = new Menu();
+		Board testbrd = new Board();
+		testMenu.board = testbrd;
+		SortedMap<Long, String> testMap = new TreeMap<Long, String>();
+		testMap = testMenu.getBranch("1");
+		testbrd.addTask(testMap, System.currentTimeMillis());
+		testMap = testMenu.getBranch("1");
+		testbrd.addTask(testMap, System.currentTimeMillis());
+		testbrd.displayTaskMapAlphabetical(testMap, "1");
 	}
 }
