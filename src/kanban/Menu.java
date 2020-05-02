@@ -169,21 +169,20 @@ public class Menu {
 	}
 
 	public String getTaskUserWantsToMove() {
-		System.out.println("Which task would you like to move?");
-		System.out.println("Enter a valid key: ");
+		System.out.println("Which task would you like to move? Enter task name: ");
 		String taskName = returnUserInput();
 		return taskName;
 	}
 
 	public String getBranchTaskMoveFrom() {
-		System.out.println("Where would you like to move this task from?");
+		System.out.println("Enter branch number task is currently in: ");
 		listBranchOptionsToConsole();
 		String branchTaskIsMovingFrom = returnUserInput();
 		return branchTaskIsMovingFrom;
 	}
 
 	public String getBranchTaskMoveTo() {
-		System.out.println("Where would you like to move this task to?");
+		System.out.println("Which branch number would you like to move this task to?");
 		listBranchOptionsToConsole();
 		String branchTaskIsMovingTo = returnUserInput();
 		return branchTaskIsMovingTo;
